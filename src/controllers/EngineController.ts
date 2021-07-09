@@ -8,6 +8,9 @@ import ObjectController, {DeselectEvent, SelectEvent} from "@/controllers/Object
 import ComponentList from "mozel-component/dist/Component/ComponentList";
 import {includes} from "lodash";
 import Log from "@/log";
+import ObjectModel from "@/models/ObjectModel";
+import {Simulate} from "react-dom/test-utils";
+import select = Simulate.select;
 
 const log = Log.instance("engine-controller");
 
@@ -47,18 +50,9 @@ export default class EngineController extends Component {
 
 	onInit() {
 		super.onInit();
-		this.eventBus.$on(SelectEvent, event => {
-			if(event.origin instanceof ObjectController) {
-				// Replaces other selections
-				this.setSelection([event.origin]);
-			}
-		});
-		this.eventBus.$on(DeselectEvent, event => {
-			if(event.origin instanceof ObjectController) {
-				const oldSelection = this.selection.current;
-				this.selection.remove(event.origin);
-				this.notifySelection(oldSelection);
-			}
+
+		this.watch(schema(EngineModel).scene.objects.$ + '.*.selected', () => {
+			this.updateSelection();
 		});
 		this.actions.pause.on(() => {
 			if(!this.engine) return;
@@ -70,25 +64,19 @@ export default class EngineController extends Component {
 		});
 	}
 
-	setSelection(objects:ObjectController[]) {
-		const oldSelection = this.selection.current;
-		// Deselect others
-		this.selection
-			.filter(object => !includes(objects, object)) // only if they are not in the new selection
-			.forEach(object => object.select(false));
-
-		// Select new
-		for(let object of objects) {
-			object.select(); // if already set to true, will not fire any changes
-			this.selection.add(object);
-		}
-
-		this.notifySelection(oldSelection);
+	updateSelection() {
+		const selection = this.model.scene.objects.filter(model => model.selected === true);
+		this.model.selection.setData(selection);
+		log.log("Current selection: ", this.model.selection.toArray());
 	}
 
-	notifySelection(oldSelection:ObjectController[]) {
-		const selection = this.selection.current;
-		log.info(`Current selection: `, selection);
-		this.events.selection.fire(new SelectionEvent(this, {selection, oldSelection}))
+	setSelection(selection:ObjectModel[]) {
+		// Deselect current
+		this.model.selection
+			.filter(model => !selection.find(m => m === model))
+			.forEach(model => model.selected = false);
+
+		// Select new
+		selection.forEach(model => model.selected = true);
 	}
 }

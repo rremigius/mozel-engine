@@ -5,6 +5,7 @@ import SceneController from "@/controllers/SceneController";
 import ComponentSlot from "mozel-component/dist/Component/ComponentSlot";
 import ObjectController from "@/controllers/ObjectController";
 import ComponentList from "mozel-component/dist/Component/ComponentList";
+import ObjectModel from "@/models/ObjectModel";
 export declare class EnginePauseAction extends ComponentAction<{}> {
 }
 export declare class EngineDestroyAction extends ComponentAction<{}> {
@@ -34,6 +35,6 @@ export default class EngineController extends Component {
     _engine?: Engine;
     get engine(): Engine | undefined;
     onInit(): void;
-    setSelection(objects: ObjectController[]): void;
-    notifySelection(oldSelection: ObjectController[]): void;
+    updateSelection(): void;
+    setSelection(selection: ObjectModel[]): void;
 }
