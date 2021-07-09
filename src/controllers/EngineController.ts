@@ -1,7 +1,7 @@
 import EngineModel from "@/models/EngineModel";
 import Component, {component, ComponentAction, ComponentActions, ComponentEvent, ComponentEvents, components} from "mozel-component/dist/Component";
 import Engine, {KeyboardEvent} from "@/Engine";
-import {schema} from "mozel";
+import Mozel, {schema} from "mozel";
 import SceneController from "@/controllers/SceneController";
 import ComponentSlot from "mozel-component/dist/Component/ComponentSlot";
 import ObjectController, {DeselectEvent, SelectEvent} from "@/controllers/ObjectController";
@@ -11,6 +11,7 @@ import Log from "@/log";
 import ObjectModel from "@/models/ObjectModel";
 import {Simulate} from "react-dom/test-utils";
 import select = Simulate.select;
+import {CollectionItemAddedEvent, CollectionItemRemovedEvent} from "mozel/dist/Collection";
 
 const log = Log.instance("engine-controller");
 
@@ -43,6 +44,9 @@ export default class EngineController extends Component {
 	@components(schema(EngineModel).selection, ObjectController)
 	selection!:ComponentList<ObjectController>;
 
+	private selectionAddedListener?:(event:CollectionItemAddedEvent<ObjectModel>)=>void;
+	private selectionRemovedListener?:(event:CollectionItemRemovedEvent<ObjectModel>)=>void;
+
 	_engine?:Engine;
 	get engine() {
 		return this._engine;
@@ -54,6 +58,17 @@ export default class EngineController extends Component {
 		this.watch(schema(EngineModel).scene.objects.$ + '.*.selected', () => {
 			this.updateSelection();
 		});
+
+		// TODO: Use EventEmitter in Mozel & Collection
+		this.selectionAddedListener = (event:CollectionItemAddedEvent<ObjectModel>) => {
+			event.data.item.selected = true;
+		};
+		this.selectionRemovedListener = (event:CollectionItemRemovedEvent<ObjectModel>) => {
+			event.data.item.selected = false;
+		};
+		this.model.selection.on(CollectionItemAddedEvent, this.selectionAddedListener);
+		this.model.selection.on(CollectionItemRemovedEvent, this.selectionRemovedListener);
+
 		this.actions.pause.on(() => {
 			if(!this.engine) return;
 			this.engine.pause();
@@ -62,6 +77,12 @@ export default class EngineController extends Component {
 			if(!this.engine) return;
 			this.engine.destroy();
 		});
+	}
+
+	onDestroy() {
+		super.onDestroy();
+		if(this.selectionAddedListener) this.model.selection.off(CollectionItemAddedEvent, this.selectionAddedListener);
+		if(this.selectionRemovedListener) this.model.selection.off(CollectionItemRemovedEvent, this.selectionRemovedListener);
 	}
 
 	updateSelection() {

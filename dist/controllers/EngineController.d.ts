@@ -32,9 +32,12 @@ export default class EngineController extends Component {
     actions: EngineActions;
     sceneController: ComponentSlot<SceneController>;
     selection: ComponentList<ObjectController>;
+    private selectionAddedListener?;
+    private selectionRemovedListener?;
     _engine?: Engine;
     get engine(): Engine | undefined;
     onInit(): void;
+    onDestroy(): void;
     updateSelection(): void;
     setSelection(selection: ObjectModel[]): void;
 }

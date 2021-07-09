@@ -47,7 +47,7 @@ export default class ObjectController extends Component {
 	}
 
 	setPosition(position:Vector3) {
-		this.model.position = this.model.$create(Vector3Model, position);
+		this.model.position.$setData(position, true);
 	}
 
 	select(state:boolean = true) {
@@ -61,7 +61,7 @@ export default class ObjectController extends Component {
 	}
 
 	rightClick(details:{position:{x:number, y:number}}) {
-		log.info(`${this} clicked.`);
+		log.info(`${this} right-clicked.`);
 		this.events.rightClick.fire(new RightClickEvent(this, details));
 	}
 

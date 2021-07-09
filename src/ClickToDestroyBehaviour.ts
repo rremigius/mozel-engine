@@ -24,6 +24,7 @@ export class ClickToDestroyBehaviour extends BehaviourController {
 		// Start new listener
 		if(parent instanceof ObjectController) {
 			this.parentListener = this.listenTo(parent.events.rightClick, () => {
+				// TODO: remove from all Collections and references (mozel)
 				parent.destroy();
 			});
 		}

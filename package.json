@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack",
+    "update-all": "npm run update-mozel && npm run update-mozel-component && npm run update-mozel-form",
     "update-mozel": "npm remove mozel && npm i https://github.com/rremigius/mozel.git",
     "update-mozel-component": "npm remove mozel-component && npm i https://github.com/rremigius/mozel-component.git",
     "update-mozel-form": "npm remove mozel-form && npm i https://github.com/rremigius/mozel-form.git",
