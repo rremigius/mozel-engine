@@ -1,9 +1,8 @@
 import { Theme, WithStyles } from "@material-ui/core";
 import React from "react";
 import { Styles } from "@material-ui/core/styles/withStyles";
-import { ReactViewComponentProps } from "mozel-component/dist/View/ReactView";
+import ReactView, { ReactViewComponentProps } from "mozel-component/dist/View/ReactView";
 import View from "mozel-component/dist/View";
-import { ReactView } from "mozel-component";
 export declare type ReactViewComponentPropsWithStyles<T extends View, S extends () => string | Styles<any, any, any>> = ReactViewComponentProps<T> & WithStyles<ReturnType<S>>;
 declare type Props = ReactViewComponentPropsWithStyles<UIView, typeof styles> & {
     onClick?: () => void;

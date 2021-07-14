@@ -17,6 +17,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
+    "event-interface-mixin": "^0.1.1",
     "gsap": "^3.7.0",
     "log-control": "0.0.2",
     "mozel": "git+https://github.com/rremigius/mozel.git",

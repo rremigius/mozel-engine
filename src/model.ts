@@ -8,7 +8,7 @@ import EngineModelFactory from "./models/EngineModelFactory";
 import {ClickToDestroyBehaviourModel} from "@/ClickToDestroyBehaviour";
 
 const models = new EngineModelFactory();
-const model = models.createAndResolveReferences(EngineModel, {
+const model = models.create(EngineModel, {
 	gid: 'engine',
 	camera: {gid: 'camera'},
 	scene: {

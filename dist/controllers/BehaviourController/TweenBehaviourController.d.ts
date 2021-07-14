@@ -8,8 +8,8 @@ declare class TweenStartedEvent extends ComponentEvent<object> {
 declare class TweenCompletedEvent extends ComponentEvent<object> {
 }
 declare class TweenBehaviourControllerEvents extends ComponentEvents {
-    started: import("mozel-component").EventEmitter<TweenStartedEvent>;
-    completed: import("mozel-component").EventEmitter<TweenCompletedEvent>;
+    started: import("event-interface-mixin").EventEmitter<TweenStartedEvent>;
+    completed: import("event-interface-mixin").EventEmitter<TweenCompletedEvent>;
 }
 export default class TweenBehaviourController extends BehaviourController {
     static Model: typeof TweenBehaviourModel;

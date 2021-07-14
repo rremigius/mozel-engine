@@ -2,7 +2,7 @@ import EngineModel from "@/models/EngineModel";
 import ComponentFactory from "mozel-component/dist/Component/ComponentFactory";
 import EngineControllerFactory from "@/controllers/EngineControllerFactory";
 import Component from "mozel-component/dist/Component";
-import { Events } from "mozel-component/dist/EventEmitter";
+import EventInterface from "event-interface-mixin";
 export declare class FrameEvent {
     timestamp: number;
     constructor(timestamp: number);
@@ -11,9 +11,9 @@ export declare class KeyboardEvent {
     key: string;
     constructor(key: string);
 }
-export declare class EngineEvents extends Events {
-    frame: import("mozel-component/dist/EventEmitter").default<FrameEvent>;
-    keyUp: import("mozel-component/dist/EventEmitter").default<KeyboardEvent>;
+export declare class EngineEvents extends EventInterface {
+    frame: import("event-interface-mixin").EventEmitter<FrameEvent>;
+    keyUp: import("event-interface-mixin").EventEmitter<KeyboardEvent>;
 }
 export default class Engine {
     static createDefaultControllerFactory(): EngineControllerFactory;

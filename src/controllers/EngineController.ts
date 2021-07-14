@@ -61,13 +61,13 @@ export default class EngineController extends Component {
 
 		// TODO: Use EventEmitter in Mozel & Collection
 		this.selectionAddedListener = (event:CollectionItemAddedEvent<ObjectModel>) => {
-			event.data.item.selected = true;
+			event.item.selected = true;
 		};
 		this.selectionRemovedListener = (event:CollectionItemRemovedEvent<ObjectModel>) => {
-			event.data.item.selected = false;
+			event.item.selected = false;
 		};
-		this.model.selection.on(CollectionItemAddedEvent, this.selectionAddedListener);
-		this.model.selection.on(CollectionItemRemovedEvent, this.selectionRemovedListener);
+		this.model.selection.events.added.on(this.selectionAddedListener);
+		this.model.selection.events.removed.on(this.selectionRemovedListener);
 
 		this.actions.pause.on(() => {
 			if(!this.engine) return;
@@ -81,8 +81,8 @@ export default class EngineController extends Component {
 
 	onDestroy() {
 		super.onDestroy();
-		if(this.selectionAddedListener) this.model.selection.off(CollectionItemAddedEvent, this.selectionAddedListener);
-		if(this.selectionRemovedListener) this.model.selection.off(CollectionItemRemovedEvent, this.selectionRemovedListener);
+		if(this.selectionAddedListener) this.model.selection.events.added.off(this.selectionAddedListener);
+		if(this.selectionRemovedListener) this.model.selection.events.removed.off(this.selectionRemovedListener);
 	}
 
 	updateSelection() {

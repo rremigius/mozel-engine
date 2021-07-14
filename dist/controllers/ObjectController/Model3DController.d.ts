@@ -6,7 +6,7 @@ export declare class MeshClickEvent extends ComponentEvent<{
 }> {
 }
 export declare class Model3DControllerEvents extends ObjectControllerEvents {
-    meshClick: import("mozel-component").EventEmitter<MeshClickEvent>;
+    meshClick: import("event-interface-mixin").EventEmitter<MeshClickEvent>;
 }
 export default class Model3DController extends ObjectController {
     static Model: typeof Model3DModel;

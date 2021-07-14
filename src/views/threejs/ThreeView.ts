@@ -22,9 +22,13 @@ export default class ThreeView extends View {
 
 	private parentObject3D?:Object3D;
 
-	onInit() {
-		super.onInit();
+	beforeSubComponentInitialization() {
+		super.beforeSubComponentInitialization();
+
 		this._object3D = this.createObject3D();
+		if(!(this._object3D instanceof Object3D)) { // sanity check
+			throw new Error(`${this.static.name}'s createObject3D did not return a RootObject3D.`);
+		}
 		this._object3D.gid = this.gid;
 		this._object3D.onClick = this.threeClick.bind(this); // To be called by ThreeEngineView
 	}

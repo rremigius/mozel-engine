@@ -6,8 +6,8 @@ export declare class PlayEvent extends ComponentEvent<{}> {
 export declare class PauseEvent extends ComponentEvent<{}> {
 }
 export declare class VideoControllerEvents extends ObjectControllerEvents {
-    play: import("mozel-component").EventEmitter<PlayEvent>;
-    pause: import("mozel-component").EventEmitter<PauseEvent>;
+    play: import("event-interface-mixin").EventEmitter<PlayEvent>;
+    pause: import("event-interface-mixin").EventEmitter<PauseEvent>;
 }
 export default class VideoController extends ObjectController {
     static Model: typeof VideoModel;

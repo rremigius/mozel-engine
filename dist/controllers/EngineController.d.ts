@@ -16,12 +16,12 @@ export declare class SelectionEvent extends ComponentEvent<{
 }> {
 }
 export declare class EngineEvents extends ComponentEvents {
-    selection: import("mozel-component").EventEmitter<SelectionEvent>;
-    keyUp: import("mozel-component").EventEmitter<KeyboardEvent>;
+    selection: import("event-interface-mixin").EventEmitter<SelectionEvent>;
+    keyUp: import("event-interface-mixin").EventEmitter<KeyboardEvent>;
 }
 export declare class EngineActions extends ComponentActions {
-    pause: import("mozel-component").EventEmitter<EnginePauseAction>;
-    destroy: import("mozel-component").EventEmitter<EngineDestroyAction>;
+    pause: import("event-interface-mixin").EventEmitter<EnginePauseAction>;
+    destroy: import("event-interface-mixin").EventEmitter<EngineDestroyAction>;
 }
 export default class EngineController extends Component {
     static Model: typeof EngineModel;

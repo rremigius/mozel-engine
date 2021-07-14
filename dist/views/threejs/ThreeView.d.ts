@@ -101,7 +101,7 @@ export default class ThreeView extends View {
     private _object3D;
     get object3D(): Object3D & ThreeViewRoot;
     private parentObject3D?;
-    onInit(): void;
+    beforeSubComponentInitialization(): void;
     onSetParent(parent?: ThreeView): void;
     createObject3D(): {
         gid: alphanumeric;

@@ -7,7 +7,7 @@ import ViewFactory from "mozel-component/dist/View/ViewFactory";
 import Component from "mozel-component/dist/Component";
 import {forEach, map} from "lodash";
 import View from "mozel-component/dist/View";
-import {Events} from "mozel-component/dist/EventEmitter";
+import EventInterface from "event-interface-mixin";
 
 const log = Log.instance("engine");
 
@@ -17,7 +17,7 @@ export class FrameEvent {
 export class KeyboardEvent {
 	constructor(public key:string) {}
 }
-export class EngineEvents extends Events {
+export class EngineEvents extends EventInterface {
 	frame = this.$event(FrameEvent);
 	keyUp = this.$event(KeyboardEvent);
 }
@@ -53,7 +53,7 @@ export default class Engine {
 
 			// Allow access to Engine from Components
 			factory.dependencies.bind(Engine).toConstantValue(this);
-			const component = factory.createAndResolveReferences(model, Component);
+			const component = factory.create(model, Component);
 			this.rootComponents[name] = component;
 
 			// Debug

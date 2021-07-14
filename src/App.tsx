@@ -2,19 +2,21 @@ import React from 'react';
 import {
 	AppBar,
 	Box,
-	createTheme, createStyles,
+	createStyles,
+	createTheme,
 	Drawer,
-	IconButton, List, Theme,
+	IconButton,
+	Theme,
 	ThemeProvider,
 	Toolbar,
-	Typography, WithStyles,
+	Typography,
+	WithStyles,
 	withStyles
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import Engine from "@/Engine";
 import Component from "mozel-component/dist/Component";
-import UIEngineView from "@/views/ui/UIEngineView";
-import {ReactView} from "mozel-component";
+import ReactView from "mozel-component/dist/View/ReactView";
 
 type Props = WithStyles<typeof styles> & {
 	engine: Engine

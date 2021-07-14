@@ -12,9 +12,8 @@ import {
 import React from "react";
 import {Styles} from "@material-ui/core/styles/withStyles";
 import {CropFree, ExpandLess, ExpandMore} from "@material-ui/icons";
-import {ReactViewComponent, ReactViewComponentProps} from "mozel-component/dist/View/ReactView";
+import ReactView, {ReactViewComponent, ReactViewComponentProps} from "mozel-component/dist/View/ReactView";
 import View from "mozel-component/dist/View";
-import {ReactView} from "mozel-component";
 
 export type ReactViewComponentPropsWithStyles<T extends View, S extends ()=>string|Styles<any,any,any>> =
 	ReactViewComponentProps<T> & WithStyles<ReturnType<S>>;
