@@ -4,7 +4,6 @@ import {schema} from "mozel";
 import TriggerController from "@/controllers/TriggerController";
 import ComponentList from "mozel-component/dist/Component/ComponentList";
 import Vector3 from "@/views/common/Vector3";
-import Vector3Model from "@/models/Vector3Model";
 import BehaviourController from "@/controllers/BehaviourController";
 import ObjectModel from "@/models/ObjectModel";
 import Log from "@/log";

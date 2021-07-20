@@ -1,4 +1,3 @@
-import LightModel from "@/models/ObjectModel/LightModel";
 import Log from "@/log";
 import ComponentFactory from "mozel-component/dist/Component/ComponentFactory";
 import Engine from "@/Engine";
@@ -6,13 +5,18 @@ import ThreeViewFactory from "@/views/threejs/ThreeViewFactory";
 import UIFactory from "@/views/ui/UIFactory";
 import ReactDOM from 'react-dom';
 import App from "@/App";
-import SphereModel from "./models/ObjectModel/SphereModel";
-import model, {models} from "@/model";
 import {ClickToDestroyBehaviour} from "@/ClickToDestroyBehaviour";
+import EngineModel from "@/models/EngineModel";
+import MozelSyncClient from "mozel-sync/dist/MozelSyncClient";
+import EngineModelFactory from "@/models/EngineModelFactory";
 
 const log = Log.instance("index");
 
-console.log(model);
+const models = new EngineModelFactory();
+const model = models.create(EngineModel, {gid: 'engine'});
+log.log(model);
+
+const client = new MozelSyncClient({model});
 
 class MyEngine extends Engine {
 	createComponentFactories(): Record<string, ComponentFactory> {
@@ -32,24 +36,15 @@ class MyEngine extends Engine {
 		}
 	}
 }
-const engine = new MyEngine(model);
-
-const container = document.getElementById('engine');
-if(!container) throw new Error("No element found with id 'engine'.");
-
-ReactDOM.render(<App engine={engine}/>, container);
 
 (async function() {
+	await client.start(); // load model from server
+
+	const container = document.getElementById('engine');
+	if(!container) throw new Error("No element found with id 'engine'.");
+
+	const engine = new MyEngine(model);
+	ReactDOM.render(<App engine={engine}/>, container);
 	await engine.loading;
 	engine.start();
-
-	setTimeout(()=>{
-		const sphere = models.registry.byGid<SphereModel>('sphere');
-		const vw = models.registry.byGid<LightModel>('vw');
-
-		vw!.objects.add(sphere as SphereModel);
-		console.log(model);
-		console.log(engine.getRootComponent('view').toTree());
-		console.log(engine.getRootComponent('ui').toTree());
-	},2000);
 })();

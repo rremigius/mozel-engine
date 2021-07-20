@@ -27,9 +27,9 @@ export default class ThreeObject extends ThreeView {
 		super.onInit();
 		this.controller = this.findController(ObjectController);
 
-		this.watch(schema(ObjectModel).position, change => {
-			this.applyPosition(change.newValue);
-		}, {debounce:0, deep});
+		this.watch(schema(ObjectModel).position.$ + ".*", () => {
+			this.applyPosition(this.model.position);
+		}, {debounce:0});
 
 		this.watch(schema(ObjectModel).scale, change => {
 			this.applyScale(change.newValue);
